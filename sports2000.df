@@ -77,7 +77,7 @@ ADD SEQUENCE "NextInvTransNum"
   MIN-VAL 0
 
 ADD TABLE "Benefits"
-  AREA "Employee"
+  AREA "Data"
   DESCRIPTION "The benefits table contains employee benefits."
   DUMP-NAME "benefits"
 
@@ -148,13 +148,13 @@ ADD FIELD "DependentCare" OF "Benefits" AS integer
   ORDER 70
 
 ADD INDEX "EmpNo" ON "Benefits" 
-  AREA "Employee"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "EmpNum" ASCENDING 
 
 ADD TABLE "BillTo"
-  AREA "Order"
+  AREA "Data"
   DESCRIPTION "The billto table contains bill to address information for an order. "
   DUMP-NAME "billto"
 
@@ -254,14 +254,14 @@ ADD FIELD "Phone" OF "BillTo" AS character
   ORDER 100
 
 ADD INDEX "custnumbillto" ON "BillTo" 
-  AREA "Order"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "CustNum" ASCENDING 
   INDEX-FIELD "BillToID" ASCENDING 
 
 ADD TABLE "Bin"
-  AREA "Inventory"
+  AREA "Data"
   DESCRIPTION "The bin table is used to represent the bins in each warehouse that contain items."
   DUMP-NAME "bin"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crbin.p" CRC "60448" 
@@ -316,22 +316,22 @@ ADD FIELD "BinName" OF "Bin" AS character
   ORDER 50
 
 ADD INDEX "BinNum" ON "Bin" 
-  AREA "Inventory"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "BinNum" ASCENDING 
 
 ADD INDEX "ItemNum" ON "Bin" 
-  AREA "Inventory"
+  AREA "Index"
   INDEX-FIELD "Itemnum" ASCENDING 
 
 ADD INDEX "WarehouseNumItemNum" ON "Bin" 
-  AREA "Inventory"
+  AREA "Index"
   INDEX-FIELD "WarehouseNum" ASCENDING 
   INDEX-FIELD "Itemnum" ASCENDING 
 
 ADD TABLE "Country"
-  AREA "Misc"
+  AREA "Data"
   LABEL "Country"
   DUMP-NAME "country"
 
@@ -357,7 +357,7 @@ ADD FIELD "CountryFlag" OF "Country" AS blob
   FORMAT "x(8)"
   INITIAL ?
   POSITION 4
-  LOB-AREA "Misc"
+  LOB-AREA "Lobs"
   LOB-BYTES 104857600
   LOB-SIZE 100M
   ORDER 35
@@ -372,17 +372,17 @@ ADD FIELD "EuropeanUnion" OF "Country" AS logical
   ORDER 45
 
 ADD INDEX "Country" ON "Country" 
-  AREA "Employee"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "Country" ASCENDING 
 
 ADD INDEX "CountryName" ON "Country" 
-  AREA "Employee"
+  AREA "Index"
   INDEX-FIELD "CountryName" ASCENDING 
 
 ADD TABLE "Customer"
-  AREA "Cust_Data"
+  AREA "Data"
   DESCRIPTION "The customer table contains customer  information including  balance and address."
   DUMP-NAME "customer"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crcust.p" CRC "?" 
@@ -567,31 +567,31 @@ ADD FIELD "EmailAddress" OF "Customer" AS character
   ORDER 200
 
 ADD INDEX "CustNum" ON "Customer" 
-  AREA "Cust_Index"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "CustNum" ASCENDING 
 
 ADD INDEX "Comments" ON "Customer" 
-  AREA "Cust_Index"
+  AREA "Index"
   WORD
   INDEX-FIELD "Comments" ASCENDING 
 
 ADD INDEX "CountryPost" ON "Customer" 
-  AREA "Cust_Index"
+  AREA "Index"
   INDEX-FIELD "Country" ASCENDING 
   INDEX-FIELD "PostalCode" ASCENDING 
 
 ADD INDEX "Name" ON "Customer" 
-  AREA "Cust_Index"
+  AREA "Index"
   INDEX-FIELD "Name" ASCENDING 
 
 ADD INDEX "SalesRep" ON "Customer" 
-  AREA "Cust_Index"
+  AREA "Index"
   INDEX-FIELD "SalesRep" ASCENDING 
 
 ADD TABLE "Department"
-  AREA "Employee"
+  AREA "Data"
   DESCRIPTION "The department contains a master listing of departments."
   DUMP-NAME "departme"
 
@@ -616,13 +616,13 @@ ADD FIELD "DeptName" OF "Department" AS character
   ORDER 20
 
 ADD INDEX "DeptCode" ON "Department" 
-  AREA "Employee"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "DeptCode" ASCENDING 
 
 ADD TABLE "Employee"
-  AREA "Employee"
+  AREA "Data"
   DESCRIPTION "The employee table stores employee information including name and address"
   DUMP-NAME "employee"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/cremp.p" CRC "56825" 
@@ -785,23 +785,23 @@ ADD FIELD "Birthdate" OF "Employee" AS date
   ORDER 97
 
 ADD INDEX "EmpNo" ON "Employee" 
-  AREA "Employee"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "EmpNum" ASCENDING 
 
 ADD INDEX "DeptCode" ON "Employee" 
-  AREA "Employee"
+  AREA "Index"
   INDEX-FIELD "DeptCode" ASCENDING 
 
 ADD INDEX "Name" ON "Employee" 
-  AREA "Employee"
+  AREA "Index"
   UNIQUE
   INDEX-FIELD "LastName" ASCENDING 
   INDEX-FIELD "FirstName" ASCENDING 
 
 ADD TABLE "Family"
-  AREA "Employee"
+  AREA "Data"
   DESCRIPTION "The family table tracks an employee's family"
   DUMP-NAME "family"
 
@@ -864,14 +864,14 @@ ADD FIELD "EmpNum" OF "Family" AS integer
   ORDER 5
 
 ADD INDEX "EmpNoRelativeName" ON "Family" 
-  AREA "Employee"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "EmpNum" ASCENDING 
   INDEX-FIELD "RelativeName" ASCENDING 
 
 ADD TABLE "Feedback"
-  AREA "Misc"
+  AREA "Data"
   DESCRIPTION "The feedback table allows customers to provide feedback about what they like and don't like."
   DUMP-NAME "feedback"
 
@@ -960,31 +960,31 @@ ADD FIELD "Rating" OF "Feedback" AS integer
   ORDER 80
 
 ADD INDEX "Department" ON "Feedback" 
-  AREA "Misc"
+  AREA "Index"
   PRIMARY
   INDEX-FIELD "Department" ASCENDING 
 
 ADD INDEX "Comments" ON "Feedback" 
-  AREA "Misc"
+  AREA "Index"
   WORD
   INDEX-FIELD "Comments" ASCENDING 
 
 ADD INDEX "Company" ON "Feedback" 
-  AREA "Misc"
+  AREA "Index"
   WORD
   INDEX-FIELD "Company" ASCENDING 
 
 ADD INDEX "Contact" ON "Feedback" 
-  AREA "Misc"
+  AREA "Index"
   WORD
   INDEX-FIELD "Contact" ASCENDING 
 
 ADD INDEX "Rating" ON "Feedback" 
-  AREA "Misc"
+  AREA "Index"
   INDEX-FIELD "Rating" ASCENDING 
 
 ADD TABLE "InventoryTrans"
-  AREA "Inventory"
+  AREA "Data"
   DESCRIPTION "The inventorytrans table contains information about the movement of inventory."
   DUMP-NAME "inventor"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crintr.p" CRC "62567" 
@@ -1080,8 +1080,13 @@ ADD FIELD "Transtime" OF "InventoryTrans" AS character
   MAX-WIDTH 10
   ORDER 100
 
+ADD INDEX "PrimaryIdx" ON "InventoryTrans" 
+  AREA "Index"
+  PRIMARY
+  INDEX-FIELD "InvTransNum" ASCENDING 
+
 ADD TABLE "Invoice"
-  AREA "Misc"
+  AREA "Data"
   DESCRIPTION "The invoice table contains transactions for the receivable module."
   DUMP-NAME "invoice"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crinv.p" CRC "?" 
@@ -1169,25 +1174,25 @@ ADD FIELD "ShipCharge" OF "Invoice" AS decimal
   ORDER 120
 
 ADD INDEX "InvoiceNum" ON "Invoice" 
-  AREA "Misc"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "Invoicenum" ASCENDING 
 
 ADD INDEX "CustNum" ON "Invoice" 
-  AREA "Misc"
+  AREA "Index"
   INDEX-FIELD "CustNum" ASCENDING 
 
 ADD INDEX "InvoiceDate" ON "Invoice" 
-  AREA "Misc"
+  AREA "Index"
   INDEX-FIELD "InvoiceDate" ASCENDING 
 
 ADD INDEX "OrderNum" ON "Invoice" 
-  AREA "Misc"
+  AREA "Index"
   INDEX-FIELD "OrderNum" ASCENDING 
 
 ADD TABLE "Item"
-  AREA "Inventory"
+  AREA "Data"
   DESCRIPTION "The item table provides a quick reference for items in stock and quantity on-hand."
   VALEXP "NOT (CAN-FIND(FIRST orderline OF item))"
   VALMSG "Cannot delete Item, order-line records exist with this item"
@@ -1331,33 +1336,33 @@ ADD FIELD "Minqty" OF "Item" AS integer
   ORDER 160
 
 ADD INDEX "ItemNum" ON "Item" 
-  AREA "Inventory"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "Itemnum" ASCENDING 
 
 ADD INDEX "CatDescription" ON "Item" 
-  AREA "Inventory"
+  AREA "Index"
   WORD
   INDEX-FIELD "CatDescription" ASCENDING 
 
 ADD INDEX "Category2ItemName" ON "Item" 
-  AREA "Inventory"
+  AREA "Index"
   INDEX-FIELD "Category2" ASCENDING 
   INDEX-FIELD "ItemName" ASCENDING 
 
 ADD INDEX "CategoryItemName" ON "Item" 
-  AREA "Inventory"
+  AREA "Index"
   INDEX-FIELD "Category1" ASCENDING 
   INDEX-FIELD "ItemName" ASCENDING 
 
 ADD INDEX "ItemName" ON "Item" 
-  AREA "Inventory"
+  AREA "Index"
   WORD
   INDEX-FIELD "ItemName" ASCENDING 
 
 ADD TABLE "LocalDefault"
-  AREA "Misc"
+  AREA "Data"
   DESCRIPTION "The local default table contains default information for the application."
   VALEXP "NOT (CAN-FIND(FIRST Customer WHERE Customer.Country = 
    LocalDefault.Country))"
@@ -1447,13 +1452,13 @@ ADD FIELD "LocalDefNum" OF "LocalDefault" AS integer
   ORDER 90
 
 ADD INDEX "localdefnum" ON "LocalDefault" 
-  AREA "Misc"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "LocalDefNum" ASCENDING 
 
 ADD TABLE "Order"
-  AREA "Order"
+  AREA "Data"
   DESCRIPTION "The order table contains order header information."
   VALEXP "1 = 1"
   DUMP-NAME "order"
@@ -1611,32 +1616,33 @@ ADD FIELD "Creditcard" OF "Order" AS character
   HELP "Please enter the credit card."
   ORDER 210
 
+
 ADD INDEX "OrderNum" ON "Order" 
-  AREA "Order"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "Ordernum" ASCENDING 
 
 ADD INDEX "CustOrder" ON "Order" 
-  AREA "Order"
+  AREA "Index"
   UNIQUE
   INDEX-FIELD "CustNum" ASCENDING 
   INDEX-FIELD "Ordernum" ASCENDING 
 
 ADD INDEX "OrderDate" ON "Order" 
-  AREA "Order"
+  AREA "Index"
   INDEX-FIELD "OrderDate" ASCENDING 
 
 ADD INDEX "OrderStatus" ON "Order" 
-  AREA "Order"
+  AREA "Index"
   INDEX-FIELD "OrderStatus" ASCENDING 
 
 ADD INDEX "SalesRep" ON "Order" 
-  AREA "Order"
+  AREA "Index"
   INDEX-FIELD "SalesRep" ASCENDING 
 
 ADD TABLE "OrderLine"
-  AREA "Order"
+  AREA "Data"
   DESCRIPTION "The orderline table contains order detail information including item number and quantity ordered."
   DUMP-NAME "orderlin"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crordl.p" CRC "?" 
@@ -1730,22 +1736,22 @@ ADD FIELD "OrderLineStatus" OF "OrderLine" AS character
   ORDER 110
 
 ADD INDEX "orderline" ON "OrderLine" 
-  AREA "Order"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "Ordernum" ASCENDING 
   INDEX-FIELD "Linenum" ASCENDING 
 
 ADD INDEX "itemnum" ON "OrderLine" 
-  AREA "Order"
+  AREA "Index"
   INDEX-FIELD "Itemnum" ASCENDING 
 
 ADD INDEX "OrderLineStatus" ON "OrderLine" 
-  AREA "Order"
+  AREA "Index"
   INDEX-FIELD "OrderLineStatus" ASCENDING 
 
 ADD TABLE "POLine"
-  AREA "Inventory"
+  AREA "Data"
   DESCRIPTION "The poline table contains the PO detail information including the item and quantity on the PO."
   DUMP-NAME "poline"
 
@@ -1836,14 +1842,14 @@ ADD FIELD "POLineStatus" OF "POLine" AS character
   ORDER 100
 
 ADD INDEX "PONumLinenum" ON "POLine" 
-  AREA "Inventory"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "PONum" ASCENDING 
   INDEX-FIELD "Linenum" ASCENDING 
 
 ADD TABLE "PurchaseOrder"
-  AREA "Inventory"
+  AREA "Data"
   DESCRIPTION "The purchaseorder table contains information pertaining to the purchase order including: PO number and status."
   DUMP-NAME "purchase"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crpo.p" CRC "58479" 
@@ -1905,13 +1911,13 @@ ADD FIELD "POStatus" OF "PurchaseOrder" AS character
   ORDER 50
 
 ADD INDEX "PONum" ON "PurchaseOrder" 
-  AREA "Inventory"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "PONum" ASCENDING 
 
 ADD TABLE "RefCall"
-  AREA "Misc"
+  AREA "Data"
   DESCRIPTION "The refcall table contains information about a sale."
   DUMP-NAME "refcall"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/ref_call.p" CRC "?" 
@@ -1977,30 +1983,30 @@ ADD FIELD "Txt" OF "RefCall" AS character
   ORDER 60
 
 ADD INDEX "CallNum" ON "RefCall" 
-  AREA "Misc"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "CallNum" ASCENDING 
 
 ADD INDEX "CustNum" ON "RefCall" 
-  AREA "Misc"
+  AREA "Index"
   UNIQUE
   INDEX-FIELD "CustNum" ASCENDING 
   INDEX-FIELD "CallNum" ASCENDING 
 
 ADD INDEX "Sibling" ON "RefCall" 
-  AREA "Misc"
+  AREA "Index"
   UNIQUE
   INDEX-FIELD "Parent" ASCENDING 
   INDEX-FIELD "CallNum" ASCENDING ABBREVIATED 
 
 ADD INDEX "Txt" ON "RefCall" 
-  AREA "Misc"
+  AREA "Index"
   WORD
   INDEX-FIELD "Txt" ASCENDING 
 
 ADD TABLE "Salesrep"
-  AREA "Misc"
+  AREA "Data"
   DESCRIPTION "The salesrep table contains sales representative information"
   VALEXP "NOT CAN-FIND(FIRST Customer Of Salesrep)"
   VALMSG "Cannot delete if used in one or more customer records."
@@ -2047,7 +2053,7 @@ ADD FIELD "SmallImage" OF "Salesrep" AS blob
   FORMAT "x(8)"
   INITIAL ?
   POSITION 6
-  LOB-AREA "Misc"
+  LOB-AREA "Lobs"
   LOB-BYTES 104857600
   LOB-SIZE 100M
   ORDER 50
@@ -2056,7 +2062,7 @@ ADD FIELD "LargeImage" OF "Salesrep" AS blob
   FORMAT "x(8)"
   INITIAL ?
   POSITION 7
-  LOB-AREA "Misc"
+  LOB-AREA "Lobs"
   LOB-BYTES 104857600
   LOB-SIZE 100M
   ORDER 60
@@ -2094,13 +2100,13 @@ ADD FIELD "PhoneMobile" OF "Salesrep" AS character
   ORDER 100
 
 ADD INDEX "SalesRep" ON "Salesrep" 
-  AREA "Misc"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "SalesRep" ASCENDING 
 
 ADD TABLE "ShipTo"
-  AREA "Order"
+  AREA "Data"
   DESCRIPTION "The shipto table contains the ship to address information for an order."
   DUMP-NAME "shipto"
 
@@ -2209,14 +2215,14 @@ ADD FIELD "Name" OF "ShipTo" AS character
   ORDER 110
 
 ADD INDEX "custnumshipto" ON "ShipTo" 
-  AREA "Order"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "CustNum" ASCENDING 
   INDEX-FIELD "ShipToID" ASCENDING 
 
 ADD TABLE "State"
-  AREA "Misc"
+  AREA "Data"
   DESCRIPTION "The state table contans state abbreviations and corresponding sales regions"
   VALEXP "NOT (CAN-FIND(FIRST customer OF state))"
   VALMSG "This state record is used by at least one Customer record."
@@ -2250,13 +2256,13 @@ ADD FIELD "Region" OF "State" AS character
   ORDER 30
 
 ADD INDEX "State" ON "State" 
-  AREA "Misc"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "State" ASCENDING 
 
 ADD TABLE "Supplier"
-  AREA "Inventory"
+  AREA "Data"
   DESCRIPTION "The supplier table contains a supplier's name, address and
 additional information pertaining to the supplier."
   DUMP-NAME "supplier"
@@ -2425,13 +2431,13 @@ ADD FIELD "Discount" OF "Supplier" AS integer
   ORDER 230
 
 ADD INDEX "SupplierID" ON "Supplier" 
-  AREA "Inventory"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "SupplierIDNum" ASCENDING 
 
 ADD TABLE "SupplierItemXref"
-  AREA "Inventory"
+  AREA "Data"
   DESCRIPTION "The supplieritemxref lists all of the items that are supplied by a particlar supplier."
   DUMP-NAME "suppitem"
 
@@ -2461,20 +2467,20 @@ ADD FIELD "Itemnum" OF "SupplierItemXref" AS integer
   ORDER 20
 
 ADD INDEX "SupplieridItemNum" ON "SupplierItemXref" 
-  AREA "Inventory"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "SupplierIDNum" ASCENDING 
   INDEX-FIELD "Itemnum" ASCENDING 
 
 ADD INDEX "ItemNumSupplierID" ON "SupplierItemXref" 
-  AREA "Inventory"
+  AREA "Index"
   UNIQUE
   INDEX-FIELD "Itemnum" ASCENDING 
   INDEX-FIELD "SupplierIDNum" ASCENDING 
 
 ADD TABLE "TimeSheet"
-  AREA "Employee"
+  AREA "Data"
   DESCRIPTION "The timesheet table records time in and out, hours worked, and overtime."
   DUMP-NAME "timeshee"
 
@@ -2569,14 +2575,14 @@ ADD FIELD "OvertimeHours" OF "TimeSheet" AS decimal
   ORDER 90
 
 ADD INDEX "EmpNoDayRecorded" ON "TimeSheet" 
-  AREA "Employee"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "EmpNum" ASCENDING 
   INDEX-FIELD "DayRecorded" ASCENDING 
 
 ADD TABLE "Vacation"
-  AREA "Employee"
+  AREA "Data"
   DESCRIPTION "The vacation table keeps track of employee vacation time."
   DUMP-NAME "vacation"
 
@@ -2610,14 +2616,14 @@ ADD FIELD "EndDate" OF "Vacation" AS date
   ORDER 25
 
 ADD INDEX "EmpNoStartDate" ON "Vacation" 
-  AREA "Employee"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "EmpNum" ASCENDING 
   INDEX-FIELD "StartDate" ASCENDING 
 
 ADD TABLE "Warehouse"
-  AREA "Inventory"
+  AREA "Data"
   DESCRIPTION "The warehouse table contains warehouse information including warehouse name and address."
   DUMP-NAME "warehous"
   TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "sports2000trgs/crware.p" CRC "58174" 
@@ -2709,17 +2715,17 @@ ADD FIELD "Phone" OF "Warehouse" AS character
   ORDER 90
 
 ADD INDEX "warehousenum" ON "Warehouse" 
-  AREA "Inventory"
+  AREA "Index"
   UNIQUE
   PRIMARY
   INDEX-FIELD "WarehouseNum" ASCENDING 
 
 ADD INDEX "warehousename" ON "Warehouse" 
-  AREA "Inventory"
+  AREA "Index"
   INDEX-FIELD "WarehouseName" ASCENDING 
 
 .
 PSC
 cpstream=ISO8859-1
 .
-0000061981
+0000062242
