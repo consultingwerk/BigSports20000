@@ -76,6 +76,16 @@ ADD SEQUENCE "NextInvTransNum"
   CYCLE-ON-LIMIT no
   MIN-VAL 0
 
+ADD SEQUENCE "NextBillToID"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+
+ADD SEQUENCE "NextShipToID"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+
 ADD TABLE "Benefits"
   AREA "Data"
   DESCRIPTION "The benefits table contains employee benefits."
