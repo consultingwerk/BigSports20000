@@ -76,6 +76,16 @@ ADD SEQUENCE "NextInvTransNum"
   CYCLE-ON-LIMIT no
   MIN-VAL 0
 
+ADD SEQUENCE "NextBillToID"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+
+ADD SEQUENCE "NextShipToID"
+  INITIAL 0
+  INCREMENT 1
+  CYCLE-ON-LIMIT no
+
 ADD TABLE "Benefits"
   AREA "Data"
   DESCRIPTION "The benefits table contains employee benefits."
@@ -157,6 +167,7 @@ ADD TABLE "BillTo"
   AREA "Data"
   DESCRIPTION "The billto table contains bill to address information for an order. "
   DUMP-NAME "billto"
+  TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "C:\work\SclNewReference\sclnr-backend\sports2000trgs\crbillto.p" CRC "21844" 
 
 ADD FIELD "CustNum" OF "BillTo" AS integer 
   FORMAT ">>>>9"
@@ -2119,6 +2130,7 @@ ADD TABLE "ShipTo"
   AREA "Data"
   DESCRIPTION "The shipto table contains the ship to address information for an order."
   DUMP-NAME "shipto"
+  TABLE-TRIGGER "CREATE" NO-OVERRIDE PROCEDURE "C:\work\SclNewReference\sclnr-backend\sports2000trgs\crshipto.p" CRC "44007"  
 
 ADD FIELD "CustNum" OF "ShipTo" AS integer 
   FORMAT ">>>>9"
