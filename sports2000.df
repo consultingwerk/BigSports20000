@@ -566,6 +566,16 @@ ADD FIELD "EmailAddress" OF "Customer" AS character
   LENGTH 0
   ORDER 200
 
+ADD FIELD "WebUrl" OF "Customer" AS character 
+  FORMAT "x(80)"
+  INITIAL ""
+  LABEL "Web Url"
+  POSITION 20
+  MAX-WIDTH 160
+  HELP "Please enter a URL for customer website"
+  ORDER 210
+  CASE-SENSITIVE
+
 ADD INDEX "CustNum" ON "Customer" 
   AREA "Index"
   UNIQUE
